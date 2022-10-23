@@ -5,10 +5,19 @@
     <title>Person</title>
 </head>
 <body>
-    <p th:text="'Name: ' + ${person.getName()}">NAME</p>
-    <p th:text="'Year of birth: ' + ${person.getBirthYear()}">YEAROFBIRTH</p>
-    <p th:text="'ID: ' + ${person.getPerson_id()}">ID</p>
+    <p th:text="${person.getName() + ', ' + person.getBirthYear()}"/>
 
+    <p th:if="${books.isEmpty()}">This person don`t take any book</p>
+
+    <div th:if="${!books.isEmpty()}">
+        <hr/>
+        <b>Books:</b>
+        <ol th:each="book : ${books}">
+            <li th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getPublishingYear()}"/>
+        </ol>
+    </div>
+
+    <hr/>
     <form th:method="GET" th:action="@{/people/{person_id}/edit(person_id=${person.getPerson_id()})}">
         <input type="submit" value="Edit"/>
     </form>
